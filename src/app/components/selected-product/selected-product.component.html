@@ -1,21 +1,23 @@
+<div class="flex flex-col gap-4 overflow-hidden" *ngIf="shopCartService.getSelectedProduct() as product">
 
-  <div class="flex flex-col md:flex-row gap-6 overflow-hidden"
-    *ngIf="shopCartService.getSelectedProduct() as product">
+  <img *ngIf="!!product.photo" [src]="product.photo" [alt]="product.name" class="w-full h-80 object-cover rounded-xl" />
 
-    <img *ngIf="!!product.photo" [src]="product.photo" [alt]="product.name" class="w-full md:w-1/2 h-80 object-cover" />
-
-    <div class="flex flex-col gap-1 p-4 justify-between w-full text-white">
-        <h1 class="text-3xl font-bold mb-2">{{ product.name }}</h1>
-        <p class=" text-sm mb-4">Categoria: {{ product.category }}</p>
-        <p class="text-2xl font-semibold mb-6">{{ product.price | currency:'BRL' }}</p>
-        <button class="mt-6 bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition w-full" (click)="addToShopCart(product)">
-          Adicionar ao carrinho
-        </button>
-    </div>
-
+  <div class="flex flex-col gap-1 p-4 justify-between w-full text-white">
+    <h1 class="text-3xl font-bold">{{ product.name }}</h1>
+    <p class=" text-sm">Categoria: {{ product.category }}</p>
+    <p class="text-2xl font-semibold mb-6">{{ product.price | currency:'BRL' }}</p>
+    <p class=" text-sm">{{ product.description }}</p>
+    <button class="mt-4 bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition w-full"
+      (click)="addToShopCart(product)">
+      Adicionar ao carrinho
+    </button>
   </div>
-  <div class="flex flex-col p-6 md:flex-row overflow-hidden w-full text-white" *ngIf="shopCartService.getSelectedProduct() == null">
-    <p class="leading-relaxed">
-      Selecione um produto.
-    </p>
-  </div>
+
+</div>
+
+<div class="flex flex-col p-6 md:flex-row overflow-hidden w-full text-white"
+  *ngIf="shopCartService.getSelectedProduct() == null">
+  <p class="leading-relaxed">
+    Selecione um produto.
+  </p>
+</div>

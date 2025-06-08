@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Product, ShopCartService } from '../../services/shop-cart.service';
+import { Component } from '@angular/core'
+import { ShopCartService } from '../../services/shop-cart.service'
+import { Product } from '../../models/product'
+import { ListService } from '../../services/list.service'
 
 @Component({
   selector: 'app-list',
@@ -7,7 +9,27 @@ import { Product, ShopCartService } from '../../services/shop-cart.service';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  constructor(public shopCartService: ShopCartService) { }
+
+  products = this.listService.paginatedProducts
+  currentPage = this.listService.currentPage
+  totalPages = this.listService.totalPages
+
+  constructor(
+    public shopCartService: ShopCartService,
+    public listService: ListService
+  ) { }
+
+  goToPage(page: number) {
+    this.listService.setPage(page)
+  }
+
+  next() {
+    this.listService.nextPage()
+  }
+
+  previous() {
+    this.listService.previousPage()
+  }
 
   viewProduct(product: Product) {
     this.shopCartService.selectProduct(product)

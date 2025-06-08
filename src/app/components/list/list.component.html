@@ -1,23 +1,40 @@
-<div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-800">
-  <div *ngFor="let product of shopCartService.products" class="bg-white rounded-2xl shadow-md overflow-hidden">
-    <div class="h-36 overflow-hidden">
-      <img
-        *ngIf="!!product.photo"
-        [src]="product.photo"
-        [alt]="product.name"
-        class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
+<div *ngIf="products().length > 0; else emptyList"
+  class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-800">
+  <ng-container *ngFor="let product of products()">
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+      <div class="h-24 overflow-hidden">
+        <img *ngIf="!!product.photo" [src]="product.photo" [alt]="product.name"
+          class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
+      </div>
+      <div class="p-4 flex flex-col gap-1">
+        <h2 class="text-lg font-semibold text-gray-800">{{ product.name }}</h2>
+        <p class="text-sm text-gray-500">
+          <i class="fa-solid fa-tag"></i>
+          <span> {{ product.category }}</span>
+        </p>
+        <p class="text-blue-600 font-bold text-xl">{{ product.price | currency:'BRL':'R$ ' }}</p>
+        <button type="button" class="mt-auto bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition w-full"
+          (click)="viewProduct(product)">
+          <span>Ver Produto</span>
+        </button>
+      </div>
     </div>
-    <div class="p-4 flex flex-col gap-1">
-      <h2 class="text-lg font-semibold text-gray-800">{{ product.name }}</h2>
-      <p class="text-sm text-gray-500">
-        <i class="fa-solid fa-tag"></i>
-        <span> {{ product.category }}</span>
-      </p>
-      <p class="text-blue-600 font-bold text-xl">{{ product.price | currency:'BRL':'R$ ' }}</p>
-      <button type="button" class="mt-auto bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition w-full"
-        (click)="viewProduct(product)">
-        <span>Ver Produto</span>
-      </button>
-    </div>
-  </div>
+  </ng-container>
 </div>
+<div *ngIf="products().length > 0" class="flex justify-center items-center mt-6 space-x-2 w-full">
+  <button (click)="previous()" [disabled]="currentPage() === 1"
+    class="px-3 py-1 bg-gray-200 rounded disabled:bg-gray-400 disabled:cursor-not-allowed">Anterior</button>
+
+  <button *ngFor="let i of [].constructor(totalPages()); let idx = index" (click)="goToPage(idx + 1)"
+    [class.bg-blue-600]="currentPage() === idx + 1" class="px-3 py-1 rounded text-white">
+    {{ idx + 1 }}
+  </button>
+
+  <button (click)="next()" [disabled]="currentPage() === totalPages()"
+    class="px-3 py-1 bg-gray-200 rounded disabled:bg-gray-400 disabled:cursor-not-allowed">Próximo</button>
+</div>
+<ng-template #emptyList>
+  <div class="flex flex-col p-6 gap-6 md:flex-row overflow-hidden w-full text-white justify-center">
+    <app-empty-message icon="fa-face-sad-tear" message="Isso é um pouco frustrante."></app-empty-message>
+  </div>
+</ng-template>

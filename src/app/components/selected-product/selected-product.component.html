@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4 overflow-hidden" *ngIf="shopCartService.selectedProduct() as product; else emptyCart">
+<div class="flex flex-col gap-4 overflow-hidden p-6" *ngIf="shopCartService.selectedProduct() as product; else emptyCart">
 
   <img *ngIf="!!product.photo" [src]="product.photo" [alt]="product.name" class="w-full h-80 object-cover rounded-xl" />
 
@@ -19,10 +19,7 @@
 </div>
 
 <ng-template #emptyCart>
-  <div class="flex flex-col p-6 md:flex-row overflow-hidden w-full text-white">
-    <p class="leading-relaxed flex flex-col justify-center content-center text-center w-full">
-      <i class="fa-solid fa-circle-plus"></i>
-      <span>Selecione um produto.</span>
-    </p>
+  <div class="flex flex-col p-6 md:flex-row overflow-hidden w-full text-white justify-center">
+    <app-empty-message icon="fa-circle-plus" message="Selecione um produto"></app-empty-message>
   </div>
 </ng-template>

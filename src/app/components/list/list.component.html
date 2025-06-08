@@ -1,0 +1,17 @@
+<div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-800">
+  <div *ngFor="let product of shopCartService.products" class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <img *ngIf="!!product.photo" [src]="product.photo" [alt]="product.name" class="w-full h-48 object-cover" />
+
+    <div class="p-4 flex flex-col gap-1">
+      <h2 class="text-lg font-semibold text-gray-800 mb-1">{{ product.name }}</h2>
+      <p class="text-sm text-gray-500 mb-2">{{ product.category }}</p>
+      <p class="text-blue-600 font-bold text-xl">{{ product.price | currency: 'BRL': 'R$ ': '1.2-2' }}</p>
+
+      <button
+        class="mt-auto bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition w-full"
+        (click)="viewProduct(product)">
+        Ver Produto
+      </button>
+    </div>
+  </div>
+</div>

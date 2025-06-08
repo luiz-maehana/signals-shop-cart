@@ -1,0 +1,49 @@
+<div class="bg-gray-800 p-6">
+
+  <div class="p-6 bg-white rounded-xl shadow-md max-w-md mx-auto">
+
+    <h2 class="text-2xl font-bold mb-6">Carrinho de Compras</h2>
+
+    <div *ngIf="shopCartService.cartItems()?.length; else emptyCart">
+
+      <div *ngFor="let item of shopCartService.cartItems()" class="flex items-center justify-between mb-4">
+
+        <div class="flex items-center space-x-4">
+          <img [src]="item.product.photo" alt="{{item.product.name}}" class="w-16 h-16 object-cover rounded-md" />
+          <div>
+            <p class="font-semibold">{{ item.product.name }}</p>
+            <p class="text-sm text-gray-500">Categoria: {{ item.product.category }}</p>
+            <p class="text-sm text-gray-700">
+              {{ item.product.price | currency: 'BRL': 'R$ ': '1.2-2' }}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-end">
+          <div class="flex items-center space-x-2">
+            <button (click)="shopCartService.removeFromShopCart(item.product)" class="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex align-center justify-center text-center"><span>-</span></button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="shopCartService.addToShopCart(item.product)" class="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex align-center justify-center text-center"><span>+</span></button>
+          </div>
+          <p class="font-semibold">
+            Subtotal:
+            {{ (item.product.price * item.quantity) | currency: 'BRL': 'R$ ': '1.2-2' }}
+          </p>
+        </div>
+
+      </div>
+
+      <hr class="my-4" />
+
+      <div class="text-right font-bold text-xl">
+        Total: {{ shopCartService.total() | currency: 'BRL': 'R$ ': '1.2-2' }}
+      </div>
+
+    </div>
+
+    <ng-template #emptyCart>
+      <p class="text-center text-gray-500">Seu carrinho está vazio.</p>
+    </ng-template>
+
+  </div>
+</div>

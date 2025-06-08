@@ -8,4 +8,12 @@ import { ShopCartService } from '../../services/shop-cart.service';
 })
 export class ShopCartComponent {
   constructor(public shopCartService: ShopCartService) { }
+
+  get cartItems() {
+    return this.shopCartService.cartItems();
+  }
+
+  get total() {
+    return this.shopCartService.priceTotal();
+  }
 }

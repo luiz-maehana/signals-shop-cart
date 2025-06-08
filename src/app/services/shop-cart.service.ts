@@ -178,10 +178,6 @@ export class ShopCartService {
     this.selectedProduct.set(product)
   }
 
-  getSelectedProduct() {
-    return this.selectedProduct()
-  }
-
   addToShopCart(product: Product) {
     this.shopCartList.update((products) => [...products, product])
   }
@@ -224,7 +220,11 @@ export class ShopCartService {
     return Array.from(grouped.values())
   })
 
-  total = computed(() => {
+  priceTotal = computed(() => {
     return this.cartItems().reduce((sum, item) => sum + item.product.price * item.quantity, 0)
   })
+
+  cartTotal = computed(() => {
+  return this.shopCartList().length
+});
 }

@@ -1,10 +1,16 @@
-<header class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
-  <h1 class="text-2xl font-bold text-gray-800"><a routerLink="/"><i class="fa-solid fa-gift"> Loja Que Vende!</i></a></h1>
+<header class="flex items-center content-center justify-between px-6 py-4 bg-white shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800">
+    <a routerLink="/">
+      <i class="fa-solid fa-gift"></i>
+      <span> QUALQUER MERCADO</span>
+    </a>
+  </h1>
 
   <button class="relative" routerLink="shop-cart">
     <i class="fas fa-shopping-cart text-2xl text-gray-700"></i>
-    <span *ngIf="shopCartService.shopCartList().length > 0" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-      {{shopCartService.shopCartList().length}}
+    <span *ngIf="shopCartService.cartTotal() > 0"
+      class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+      {{shopCartService.cartTotal()}}
     </span>
   </button>
 </header>
